@@ -78,6 +78,7 @@
   - [Kohya LoRA Trainer](https://github.com/bmaltais/kohya_ss)（最常用）
   - 或者 DreamBooth + LoRA 支持工具链
 设置内容包括：
+
 | 项目     | 示例值                 | 说明             |
 | ------ | ------------------- | -------------- |
 | 基础模型   | Anything v5         | 训练是在这个模型基础上进行的 |
