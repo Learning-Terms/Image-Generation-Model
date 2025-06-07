@@ -100,10 +100,10 @@ masterpiece, best quality, 1girl, looking at viewer, long hair, blue eyes, schoo
   - Hugging Face：部分动漫模型托管地
 
 ### 🔸 2. 在线平台（免安装，快速生成）
-- Mage.space（https://www.mage.space/）：选择Anime模型，输入提示词即可生成
-- PlaygroundAI（https://playgroundai.com/）：支持SD和Anime模型
+- Mage.space（[https://www.mage.space/]）：选择Anime模型，输入提示词即可生成
+- PlaygroundAI（[https://playgroundai.com/]）：支持SD和Anime模型
 - Leonardo AI：注册即可使用，画风精致，适合设计师
-- NovelAI（https://novelai.net/）：适合生成日式风格女性角色插画
+- NovelAI（[https://novelai.net/]）：适合生成日式风格女性角色插画
 
 ## 创作建议和技巧
 ### ✍️ 提示词撰写（Prompt Engineering）
