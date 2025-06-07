@@ -154,4 +154,29 @@ blurry, bad hands, extra fingers, long neck, deformed, watermark, text, lowres
 ```
 - 负向提示词可以通用: 可以将负向提示词写好后保存下来，在多个作品中复用.
 
+#### 负向提示词模板
+##### ✅ 一般通用负向提示词模板（适用于大多数图像）
+```
+lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, jpeg artifacts, signature, watermark, username, blurry
+```
+##### 🎨 二次元插画专用负向提示词（动漫风格强化版）
+```
+nsfw, lowres, bad anatomy, bad hands, deformed, blurry, watermark, signature, text, error, jpeg artifacts, ugly, duplicate, morbid, mutated, extra fingers, missing fingers, fused fingers, long neck, low quality, worst quality, normal quality, distorted limbs, cross-eye, bad proportions
+```
+##### 👤 人像专用负向提示词（适合写实/二次元人脸）
+```
+deformed, mutated, extra limbs, bad hands, extra arms, extra legs, malformed hands, missing arms, missing legs, mutated hands, fused fingers, long neck, long face, bad eyes, cross-eyed, blurry, jpeg artifacts, watermark, text
+```
+##### 🌆 风景类专用负向提示词（清晰度提升）
+```
+blurry, lowres, overexposed, underexposed, low contrast, watermark, signature, text, distorted, jpeg artifacts, noise, bad composition
+```
+
+##### 💡 提示词使用技巧
+| 技巧                      | 说明                                      |
+| ----------------------- | --------------------------------------- |
+| ✅ 放在 Negative prompt 栏中 | 大多数绘图界面（如 WebUI、ComfyUI）都支持负向提示栏        |
+| 🔁 可以常驻使用               | 可以设为默认项，除非风格需要特殊调整                      |
+| 🔧 逐步调整                 | 若画面有问题，可以根据错误现象增删关键词                    |
+| 🔣 支持权重控制               | 如使用 `(bad hands:1.4)` 让其影响更强（在支持该语法的平台） |
 
