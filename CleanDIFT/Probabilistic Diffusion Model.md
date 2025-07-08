@@ -8,8 +8,10 @@
 
 #### [参考笔记](https://i0.hdslb.com/bfs/new_dyn/a180978fc2337febe001ab17001a6a27373596439.jpg@1052w_!web-dynamic.webp)
 
+#### [Diffusion Models Tutorial](https://colab.research.google.com/github/azad-academy/denoising-diffusion-model/blob/main/diffusion_model_demo.ipynb)
 
-### 扩散模型是生成式AI模型的一种
+
+## 第1章 扩散模型是生成式AI模型的一种
 
 #### 📌 一句话定义
 生成式AI模型是一类通过**学习训练数据分布**，从而可以生成**新的、具有相似特征**数据的模型，包括**文本、图像、音频、代码**等多模态内容的自动生成。
@@ -61,8 +63,8 @@
 - 传统VAE（生成质量不足）
 - 基于 RNN/LSTM 的生成（已被Transformer取代）
 
-### 条件概率公式和高斯分布的KL散度
+## 第2章 条件概率公式和高斯分布的KL散度
 
- 
+### 
 
 
