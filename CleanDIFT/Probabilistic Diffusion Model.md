@@ -6,10 +6,11 @@
 
 #### [2015 Deep Unsupervised Learning using Nonequilibrium Thermodynamics](http://proceedings.mlr.press/v37/sohl-dickstein15.pdf)
 
-#### [参考笔记](https://i0.hdslb.com/bfs/new_dyn/a180978fc2337febe001ab17001a6a27373596439.jpg@1052w_!web-dynamic.webp)
+#### [参考笔记](https://raw.githubusercontent.com/Learning-Terms/Image-Generation-Model/refs/heads/main/CleanDIFT/1.webp)
 
 #### [Diffusion Models Tutorial](https://colab.research.google.com/github/azad-academy/denoising-diffusion-model/blob/main/diffusion_model_demo.ipynb)
 
+####[Latex常用数学符号](https://blog.csdn.net/LCCFlccf/article/details/89643585)
 
 ## 第1章 扩散模型是生成式AI模型的一种
 
@@ -83,6 +84,7 @@ $$
 - 重参数技巧：目的是为了梯度可以传播 采样出来的值与均值和方差之间的梯度是可导的
 
 ## 第3章 VAE回顾
+参考笔记
 
 ## 第4章 Diffusion Model
 
@@ -106,5 +108,55 @@ $$
 
 ### 逆扩散过程 Reverse Process
 
+- 逆扩散过程的目的是从纯噪声高斯分布中恢复出原始分布
+- 逆扩散过程是一个马尔科夫链过程
 
+### 后验的扩散条件概率分布是可以用一个公式表达的
 
+- 也就是说给定 $x_0$ 和 $x_1$ 我们可以计算出 $x_{t-1}$
+- 公式见参考笔记 核心是贝叶斯公式 忽略系数部分而只保留指数部分
+
+### 贝叶斯公式和其在扩散模型中的应用
+#### 贝叶斯公式（条件概率公式）是什么？（Bayes' Theorem）
+📌 数学表达：
+
+$$
+P(A \mid B) = \frac{P(B \mid A) \cdot P(A)}{P(B)}
+$$
+ 
+中文解释：给定事件𝐵已经发生，事件𝐴发生的概率是多少？ 
+- P(A∣B)：后验概率，在观察到𝐵的条件下𝐴发生的概率
+- P(B∣A)：似然，在𝐴发生的前提下观察到𝐵的概率
+- P(A)：先验概率，没看到任何数据前对𝐴发生的信念
+- P(B)：边际概率，事件𝐵发生的总概率
+
+#### 贝叶斯公式在生成式AI模型中的作用
+📌 通用作用：建立 **“隐变量 → 观测数据”的推理路径**
+
+生成模型中，我们往往假设：
+- 存在一个潜在变量 𝑧（隐藏语义、图像风格等高层次特征）
+- 数据 𝑥是从这个潜在变量“生成”的
+
+学习目标：我们希望**通过观察到的数据𝑥，去推断生成它的潜变量𝑧，并最终重建出观察到的输入数据**，也就是求解：
+
+$$
+p(x_{t-1} \mid x_t) = \frac{p(x_t \mid x_{t-1}) \cdot p(x_{t-1})}{p(x_t)}
+$$
+
+——这正是贝叶斯公式的用武之地！
+
+- P(z)：先验（通常设为正态分布）
+- P(x∣z)：生成器（解码器）
+- P(z∣x)：推断器（编码器）
+
+#### 贝叶斯公式在扩散模型中的应用
+
+- 逆扩散过程中的每一步都依赖贝叶斯推理：
+
+- 但由于 $p(x_{t−1})$ 是未知的（其他都在前向过程中已知），无法直接通过贝叶斯公式计算，因此我们得用**神经网络去学习一个近似的反向分布**，即：
+
+$p_θ(x_{t−1}∣x_t)$ ≈some parametric Gaussian predicted by a neural network
+
+- 这就是扩散模型的意义 逆扩散过程的训练目标是训练目标是**逼近每一个时间步的后验概率 $p(x_{t−1}∣x_t)$** ，所以本质是一个连续的贝叶斯推断过程！
+
+## 第5章 目标数据分布的似然函数
