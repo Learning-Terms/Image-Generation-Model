@@ -38,3 +38,44 @@
   - 轻量：微调参数量较小
   - 无监督：无需下游任务的标签
   - 效率高：去除 ensemble 带来的冗余计算
+------------
+
+## Introduction
+- Learning meaningful visual representations that capture a vast amount of world knowledge remains a key problem in the field of computer vision. **Diffusion models can be trained at scale in a self-supervised manner** and have rapidly advanced the state of the art in image [12, 41, 51] and video generation [13, 25, 58], making them a good candidate to learn visual representations.
+- Many early works have already achieved impressive results using internal features from large-scale pretrained diffusion models for a wide variety of tasks, such as semantic correspondence detection [62, 66, 67], semantic segmentation [2, 39, 63], panoptic segmentation [64], object detection [8], and classification [31].
+- However, <mark>the optimal approach to extract this world knowledge from a diffusion model remains uncertain</mark>.
+---------
+- To understand why that is the case, we take a look at how diffusion models are trained: <mark>a varying amount of noise is added to a clean input image (forward process) and the model is tasked to remove the noise from the image (backward process)</mark>.
+- The amount of added noise is dependent on **the diffusion timestep**. As a result, the model learns to operate on noisy images and also **becomes dependent(依赖) on the noise timestep** as different noise levels require the model to perform different tasks [1, 4].
+- Since noisy images inherently contain less information than clean images (cf. Figure 2), we hypothesize that **this harms the internal feature representation** of diffusion models [9] and, thus, the extractable world knowledge.
+- Furthermore, the timestep acts as a hyperparameter that influences the internal feature representation and needs to be picked independently for every downstream application (cf. Figure 14).
+-----------
+## 导引第一节
+### 🧠 一句话总结
+- 虽然大规模预训练的扩散模型在图像和视频生成上取得突破，并能用于多种视觉任务，但如何最有效地提取其内部语义特征（世界知识）仍是未解问题，其根源在于：模型是在有噪声输入上训练的，导致其内部特征质量与噪声水平密切相关，进而影响特征可用性和稳定性。
+
+### 🧪 作者的假设（hypothesis）
+- 因为噪声图像本身信息量少于原始图像，模型学到的内部表示可能也受限
+- 加噪程度（timestep）变成了一个高敏感的超参数，因为不同任务需要选择不同 timestep 来添加噪声 以让扩散模型提取特征 → 可迁移性差，调参成本高
+- **因此需要解决的问题如下：噪声损害语义表示 + timestep超参数敏感**
+
+###  📊 小结图示
+```
+扩散模型训练输入 = 原始图像 + （对于不同任务）不同的timestep添加噪声
+        ↓
+故模型特征依赖于噪声程度和timestep
+        ↓
+🚨 待解决问题:噪声损害语义表示 + timestep超参数敏感
+        ↓
+导致下游任务提取特征时不稳定 & 难以泛化
+```
+------------
+- We propose a novel feature extraction method that (1) eliminates the need to destroy information by adding noise to the input; and (2) produces timestep-independent generic diffusion features useful for a wide range of down-stream
+tasks, alleviating the need to tune a noising timestep per down-stream task.
+- We show how to adapt an off-the-shelf large-scale pre-trained diffusion backbone to provide these features at minimal cost (approximately 30 minutes of finetuning on a single A100 GPU) and demonstrate improved performance across a wide range of downstream tasks.
+- We achieve this by viewing a diffusion model as a family of T feature extractors that operate on images with different noise levels and provide features with different characteristics. We consolidate all T feature extraction functions in ourfeature extractor by aligning their internal representations.
+- Specifically, we initialize our feature extractor as a trainable copy of the diffusion model; fine-tune it with clean images and no timestep input; and align its features with all T timedependent feature extractors of the diffusion model.
+- We evaluate our improved features across a wide variety of downstream tasks, such as semantic correspondence matching, monocular depth estimation, semantic segmentation, and classification, and find that they consistently improve upon approaches based on standard diffusion features. These improvements are most evident for dense visual tasks such as semantic correspondence matching, where our features show substantial performance gains across a wide variety of setups [62, 66, 67] and set a new state-of-the-art for unsupervised semantic correspondence matching.
+- Additionally, our proposed method eliminates the need for noise or timestep ensembling [62], offering substantial speed gains (e.g., 8ˆ over DIFT [62]), on top of improved quality. Our method is generic and integrates easily with established methods, such as fusing diffusion and DINOv2 features [66, 67].
+
+
